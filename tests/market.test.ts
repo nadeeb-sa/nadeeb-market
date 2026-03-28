@@ -2,7 +2,7 @@ import { test, expect, type Page } from '@playwright/test';
 
 const BASE = 'http://localhost:4000';
 const API = 'http://localhost:5235/api';
-const PROD_API = 'https://api.nadeeb.com.sa/api';
+const PROD_API = 'https://nadeeb-api.azurewebsites.net/api';
 
 // ─── Test Data ──────────────────────────────────────────────────────────────
 

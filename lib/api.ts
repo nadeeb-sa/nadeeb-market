@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://api.nadeeb.com.sa/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://nadeeb-api.azurewebsites.net/api";
 
 interface ApiResponse {
   success: boolean;
