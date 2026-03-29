@@ -7,11 +7,11 @@ import SuccessState from "@/components/sections/SuccessState";
 import CompanyForm from "@/components/forms/CompanyForm";
 import {
   ArrowLeft, ArrowRight, CheckCircle2, FileText,
-  Users, Plane, MapPin, Ambulance,
-  UserCheck, AlertCircle, HeartHandshake
+  Plane, MapPin, Ambulance,
+  UserCheck, AlertCircle, HeartHandshake, Navigation
 } from "lucide-react";
 
-const SERVICE_ICONS = [Users, Plane, MapPin, MapPin, Ambulance, UserCheck, AlertCircle, HeartHandshake];
+const SERVICE_ICONS = [Navigation, Plane, MapPin, MapPin, Ambulance, UserCheck, AlertCircle, HeartHandshake];
 
 export default function CompaniesPage() {
   const t = useTranslations("companies");
@@ -22,14 +22,13 @@ export default function CompaniesPage() {
 
   if (success) return <SuccessState />;
 
-  const flow1Steps: string[] = t.raw("flow1Steps");
-  const flow2Steps: string[] = t.raw("flow2Steps");
-  const services: string[] = t.raw("services");
+  const flow1Steps = t.raw("flow1Steps") as string[];
+  const flow2Steps = t.raw("flow2Steps") as string[];
+  const services = t.raw("services") as string[];
   const whyItems = [t("why1"), t("why2"), t("why3"), t("why4")];
 
   return (
     <>
-      {/* Hero */}
       <Hero
         title={t("heroTitle")}
         subtitle={t("heroSubtitle")}
@@ -49,9 +48,8 @@ export default function CompaniesPage() {
           >
             {t("howTitle")}
           </motion.h2>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Flow 1 — Direct */}
+            {/* Flow 1 */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -72,7 +70,7 @@ export default function CompaniesPage() {
               </div>
             </motion.div>
 
-            {/* Flow 2 — Agency */}
+            {/* Flow 2 */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -86,16 +84,14 @@ export default function CompaniesPage() {
               <div className="flex flex-col gap-3">
                 {flow2Steps.map((step, i) => (
                   <div key={i} className="flex items-center gap-3">
-                    <div className="flex items-center gap-2 flex-1">
-                      <span className="w-6 h-6 bg-white/10 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">{i + 1}</span>
-                      <span className="text-gray-300 text-sm">{step}</span>
-                    </div>
+                    <span className="w-6 h-6 bg-white/10 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">{i + 1}</span>
+                    <span className="text-gray-300 text-sm flex-1">{step}</span>
                     {i < flow2Steps.length - 1 && (
                       <ArrowIcon className="w-4 h-4 text-[#c0973b]/50 flex-shrink-0" />
                     )}
                   </div>
                 ))}
-                <div className="mt-3 flex items-center gap-2 bg-[#c0973b]/10 rounded-lg p-2.5">
+                <div className="mt-2 flex items-center gap-2 bg-[#c0973b]/10 rounded-lg p-2.5">
                   <FileText className="w-4 h-4 text-[#c0973b] flex-shrink-0" />
                   <span className="text-[#c0973b] text-xs font-medium">{flow2Steps[3]}</span>
                 </div>
