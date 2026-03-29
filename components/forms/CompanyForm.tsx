@@ -38,9 +38,9 @@ export default function CompanyForm({ onSuccess }: { onSuccess: () => void }) {
     }
   };
 
-  const inputClass = "w-full border border-gray-200 rounded-lg px-4 py-3 min-h-[52px] text-base text-gray-900 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-colors bg-gray-50/50";
+  const inputClass = "w-full border border-gray-200 rounded-lg px-4 py-3 min-h-[52px] text-base text-gray-900 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-colors bg-gray-50/50 hover:border-gray-300";
   const labelClass = "block text-sm font-semibold text-gray-700 mb-2";
-  const errorClass = "text-red-500 text-xs mt-1";
+  const errorClass = "text-red-500 text-xs mt-1.5 flex items-center gap-1";
 
   const cities = [
     { value: "makkah", label: t("cityMakkah") },
@@ -63,34 +63,34 @@ export default function CompanyForm({ onSuccess }: { onSuccess: () => void }) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className={labelClass}>{t("companyName")}</label>
-          <input {...register("companyName")} className={inputClass} />
+          <label htmlFor="c-companyName" className={labelClass}>{t("companyName")}</label>
+          <input id="c-companyName" {...register("companyName")} className={inputClass} />
           {errors.companyName && <p className={errorClass}>{t("required")}</p>}
         </div>
         <div>
-          <label className={labelClass}>{t("contactName")}</label>
-          <input {...register("contactName")} className={inputClass} />
+          <label htmlFor="c-contactName" className={labelClass}>{t("contactName")}</label>
+          <input id="c-contactName" {...register("contactName")} className={inputClass} />
           {errors.contactName && <p className={errorClass}>{t("required")}</p>}
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className={labelClass}>{t("phone")}</label>
-          <input {...register("phone")} className={inputClass} placeholder="05xxxxxxxx" dir="ltr" />
+          <label htmlFor="c-phone" className={labelClass}>{t("phone")}</label>
+          <input id="c-phone" {...register("phone")} className={inputClass} placeholder="05xxxxxxxx" dir="ltr" />
           {errors.phone && <p className={errorClass}>{t("invalidPhone")}</p>}
         </div>
         <div>
-          <label className={labelClass}>{t("email")}</label>
-          <input {...register("email")} type="email" className={inputClass} dir="ltr" />
+          <label htmlFor="c-email" className={labelClass}>{t("email")}</label>
+          <input id="c-email" {...register("email")} type="email" className={inputClass} dir="ltr" />
           {errors.email && <p className={errorClass}>{t("invalidEmail")}</p>}
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className={labelClass}>{t("city")}</label>
-          <select {...register("city")} className={inputClass}>
+          <label htmlFor="c-city" className={labelClass}>{t("city")}</label>
+          <select id="c-city" {...register("city")} className={`${inputClass} cursor-pointer`}>
             <option value="">{t("required")}</option>
             {cities.map((c) => (
               <option key={c.value} value={c.value}>{c.label}</option>
@@ -99,8 +99,8 @@ export default function CompanyForm({ onSuccess }: { onSuccess: () => void }) {
           {errors.city && <p className={errorClass}>{t("required")}</p>}
         </div>
         <div>
-          <label className={labelClass}>{t("companySize")}</label>
-          <select {...register("companySize")} className={inputClass}>
+          <label htmlFor="c-companySize" className={labelClass}>{t("companySize")}</label>
+          <select id="c-companySize" {...register("companySize")} className={`${inputClass} cursor-pointer`}>
             <option value="">{t("required")}</option>
             {sizeOptions.map((s) => (
               <option key={s.value} value={s.value}>{s.label}</option>
@@ -111,25 +111,31 @@ export default function CompanyForm({ onSuccess }: { onSuccess: () => void }) {
       </div>
 
       <div>
-        <label className={labelClass}>{t("licenseNo")}</label>
-        <input {...register("licenseNo")} className={inputClass} />
+        <label htmlFor="c-licenseNo" className={labelClass}>{t("licenseNo")}</label>
+        <input id="c-licenseNo" {...register("licenseNo")} className={inputClass} />
       </div>
 
       <div>
-        <label className={labelClass}>{t("website")}</label>
-        <input {...register("website")} className={inputClass} dir="ltr" />
+        <label htmlFor="c-website" className={labelClass}>{t("website")}</label>
+        <input id="c-website" {...register("website")} className={inputClass} dir="ltr" />
       </div>
 
       <div>
-        <label className={labelClass}>{t("notes")}</label>
-        <textarea {...register("notes")} className={inputClass} rows={3} />
+        <label htmlFor="c-notes" className={labelClass}>{t("notes")}</label>
+        <textarea id="c-notes" {...register("notes")} className={inputClass} rows={3} />
       </div>
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-primary text-white py-3.5 min-h-[52px] rounded-lg font-bold text-base hover:bg-primary-dark transition-colors disabled:opacity-50"
+        className="w-full bg-primary text-white py-3.5 min-h-[52px] rounded-xl font-bold text-base hover:bg-primary-dark transition-colors disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
       >
+        {isSubmitting && (
+          <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+          </svg>
+        )}
         {isSubmitting ? t("submitting") : t("submit")}
       </button>
     </form>

@@ -26,6 +26,7 @@ export default function CompaniesPage() {
       <Hero
         title={t("heroTitle")}
         subtitle={t("heroSubtitle")}
+        ctaText={t("formTitle")}
         variant="companies"
       />
 
@@ -50,7 +51,7 @@ export default function CompaniesPage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.05 }}
-                  className="bg-white rounded-xl p-4 border border-gray-100 flex flex-col items-center text-center gap-2 shadow-sm hover:shadow-md hover:border-primary/30 transition-all"
+                  className="bg-white rounded-xl p-4 border border-gray-100 flex flex-col items-center text-center gap-2 shadow-sm hover:shadow-md hover:border-primary/30 transition-all cursor-default"
                 >
                   <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
                     <Icon className="w-5 h-5 text-primary" />
@@ -64,7 +65,7 @@ export default function CompaniesPage() {
       </section>
 
       {/* Form */}
-      <section className="py-16 bg-primary/5">
+      <section id="form-section" className="py-16 bg-white">
         <div className="max-w-[640px] mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

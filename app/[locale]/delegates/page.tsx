@@ -19,6 +19,7 @@ export default function DelegatesPage() {
       <Hero
         title={t("heroTitle")}
         subtitle={t("heroSubtitle")}
+        ctaText={t("formTitle")}
         variant="delegates"
       />
 
@@ -90,7 +91,7 @@ export default function DelegatesPage() {
       </section>
 
       {/* Form */}
-      <section className="py-16 bg-white">
+      <section id="form-section" className="py-16 bg-gray-50">
         <div className="max-w-[640px] mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -47,7 +47,8 @@ export default function InvestorsPage() {
         title={t("heroTitle")}
         subtitle={t("heroSubtitle")}
         badge={t("heroBadge")}
-        badgeIcon="📈"
+        badgeIcon="chart"
+        ctaText={t("formTitle")}
         variant="investors"
       />
 
@@ -95,7 +96,7 @@ export default function InvestorsPage() {
       </section>
 
       {/* Form Section */}
-      <section className="py-16 bg-[#fdf6ec]">
+      <section id="form-section" className="py-16 bg-[#fdf6ec]">
         <div className="max-w-[640px] mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

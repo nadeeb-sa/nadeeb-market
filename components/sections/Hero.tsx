@@ -1,19 +1,25 @@
 "use client";
 import { motion } from "framer-motion";
+import { TrendingUp, ArrowDown } from "lucide-react";
 
 interface HeroProps {
   title: string;
   subtitle: string;
   badge?: string;
-  badgeIcon?: string;
+  badgeIcon?: "chart";
+  ctaText?: string;
   variant?: "delegates" | "companies" | "investors";
 }
 
-export default function Hero({ title, subtitle, badge, badgeIcon, variant = "delegates" }: HeroProps) {
+export default function Hero({ title, subtitle, badge, badgeIcon, ctaText, variant = "delegates" }: HeroProps) {
   const variantStyles = {
     delegates: "bg-gradient-to-br from-primary-dark via-primary to-primary-light",
     companies: "bg-gradient-to-br from-primary-dark via-primary to-primary-light",
     investors: "bg-[#1a1610]",
+  };
+
+  const scrollToForm = () => {
+    document.getElementById("form-section")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -42,7 +48,7 @@ export default function Hero({ title, subtitle, badge, badgeIcon, variant = "del
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2 mb-8 text-sm font-medium"
           >
-            {badgeIcon && <span>{badgeIcon}</span>}
+            {badgeIcon === "chart" && <TrendingUp className="w-4 h-4" />}
             <span>{badge}</span>
           </motion.div>
         )}
@@ -62,6 +68,19 @@ export default function Hero({ title, subtitle, badge, badgeIcon, variant = "del
         >
           {subtitle}
         </motion.p>
+
+        {ctaText && (
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            onClick={scrollToForm}
+            className="mt-8 inline-flex items-center gap-2 bg-white text-primary-dark font-bold px-8 py-3.5 rounded-xl hover:bg-white/90 transition-colors cursor-pointer shadow-lg"
+          >
+            {ctaText}
+            <ArrowDown className="w-4 h-4 animate-bounce" />
+          </motion.button>
+        )}
       </div>
     </section>
   );
