@@ -16,7 +16,7 @@ export default function Footer() {
     <footer className="bg-[#0f1923] text-white">
       {/* Main Footer */}
       <div className="max-w-6xl mx-auto px-4 py-14">
-        <div className={`grid grid-cols-1 md:grid-cols-3 gap-10 ${isAr ? "text-right" : "text-left"}`}>
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-10 max-w-3xl mx-auto w-full ${isAr ? "text-right" : "text-left"}`}>
 
           {/* Brand Column */}
           <div className="flex flex-col gap-4">
@@ -34,39 +34,6 @@ export default function Footer() {
                 ? "منصة نديب لإدارة خدمات العمرة والحج — تربط الشركات بالمناديب المحترفين."
                 : "Nadeeb platform for Umrah & Hajj services management — connecting companies with professional delegates."}
             </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-white font-bold text-base mb-5 border-b border-[#156661] pb-2 inline-block">
-              {isAr ? "روابط سريعة" : "Quick Links"}
-            </h3>
-            <ul className="flex flex-col gap-3">
-              {[
-                {
-                  label: isAr ? "للمناديب" : "For Delegates",
-                  href: `/${locale}/delegates`,
-                },
-                {
-                  label: isAr ? "للشركات" : "For Companies",
-                  href: `/${locale}/companies`,
-                },
-                {
-                  label: isAr ? "للمستثمرين" : "For Investors",
-                  href: `/${locale}/investors`,
-                },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-[#c0973b] transition-colors text-sm flex items-center gap-2"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#156661] inline-block" />
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </div>
 
           {/* Contact Info */}
@@ -128,12 +95,9 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-center">
           <p className="text-gray-500 text-xs">
             {t("copyright")}
-          </p>
-          <p className="text-gray-600 text-xs">
-            {isAr ? "مكة المكرمة، المملكة العربية السعودية 🇸🇦" : "Makkah, Saudi Arabia 🇸🇦"}
           </p>
         </div>
       </div>
