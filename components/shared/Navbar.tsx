@@ -19,7 +19,7 @@ export default function Navbar() {
   return (
     <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href={`/${locale}`} className="flex items-center">
+        <Link href={`/${locale}/delegates`} className="flex items-center">
           <Image
             src="/logo.png"
             alt="نديب Nadeeb"

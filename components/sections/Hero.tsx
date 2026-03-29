@@ -11,8 +11,8 @@ interface HeroProps {
 
 export default function Hero({ title, subtitle, badge, badgeIcon, variant = "delegates" }: HeroProps) {
   const variantStyles = {
-    delegates: "bg-gradient-to-br from-[#0d4441] via-[#156661] to-[#1f8a84]",
-    companies: "bg-[#1a1a2e]",
+    delegates: "bg-gradient-to-br from-primary-dark via-primary to-primary-light",
+    companies: "bg-gradient-to-br from-primary-dark via-primary to-primary-light",
     investors: "bg-[#1a1610]",
   };
 
@@ -24,14 +24,14 @@ export default function Hero({ title, subtitle, badge, badgeIcon, variant = "del
       )}
       {variant === "companies" && (
         <>
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c0973b]/40 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c0973b]/40 to-transparent" />
-          <div className="absolute top-8 left-8 w-32 h-32 border border-[#c0973b]/10 rotate-45" />
-          <div className="absolute bottom-8 right-8 w-24 h-24 border border-[#c0973b]/10 rotate-12" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-secondary/40 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-secondary/40 to-transparent" />
+          <div className="absolute top-8 left-8 w-32 h-32 border border-secondary/10 rotate-45" />
+          <div className="absolute bottom-8 right-8 w-24 h-24 border border-secondary/10 rotate-12" />
         </>
       )}
       {variant === "investors" && (
-        <div className="absolute inset-0 gold-dots-pattern text-[#c0973b]/[0.08]" />
+        <div className="absolute inset-0 gold-dots-pattern text-secondary/[0.08]" />
       )}
 
       <div className="relative max-w-4xl mx-auto px-4 text-center w-full">
