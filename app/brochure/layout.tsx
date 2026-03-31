@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 
 export const metadata: Metadata = {
-  title: "بروشور نديب",
+  title: "عن نديب",
   description: "منصة نديب للدعم الميداني في قطاع العمرة",
   robots: "noindex",
 };

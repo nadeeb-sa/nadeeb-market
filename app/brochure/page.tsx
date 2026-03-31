@@ -36,10 +36,10 @@ export default function BrochurePage() {
 
       {/* Header */}
       <div className="w-full max-w-2xl flex items-center justify-between mb-8">
-        <h1 className="text-white text-xl font-bold">بروشور نديب</h1>
+        <h1 className="text-white text-xl font-bold">عن نديب</h1>
         <a
           href="/brochure/nadeeb-brochure.pdf"
-          download="نديب-بروشور.pdf"
+          download="نديب.pdf"
           className="flex items-center gap-2 bg-[#c0973b] hover:bg-[#a8832f]
                      text-white font-semibold px-6 py-2.5 rounded-xl transition-all text-sm shadow-lg"
         >
@@ -77,18 +77,7 @@ export default function BrochurePage() {
         ))}
       </div>
 
-      {/* Footer download */}
-      <div className="mt-10">
-        <a
-          href="/brochure/nadeeb-brochure.pdf"
-          download="نديب-بروشور.pdf"
-          className="flex items-center gap-2 bg-[#156661] hover:bg-[#0e4f4b]
-                     text-white font-semibold px-8 py-3 rounded-xl transition-all shadow-lg"
-        >
-          <DownloadIcon />
-          تحميل البروشور كـ PDF
-        </a>
-      </div>
+
     </div>
   );
 }
