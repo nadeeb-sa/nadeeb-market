@@ -24,7 +24,16 @@
     "heroTitle": "Welcome aboard, Nadeeb's got you",
     "heroSubtitle": "One app connects you with licensed Umrah companies. Register with multiple companies, choose your services, and work whenever it suits you.",
     "servicesTitle": "Services you'll provide",
-    "services": ["Guidance & Orientation", "Airport Transfer", "Al Rawdah Transfer", "City Transfer", "Hospital Admission & Discharge", "Personal Handler", "Absence Report Followup", "Burial Procedures"],
+    "services": [
+      "Guidance & Orientation",
+      "Airport Transfer",
+      "Al Rawdah Transfer",
+      "City Transfer",
+      "Hospital Admission & Discharge",
+      "Personal Handler",
+      "Absence Report Followup",
+      "Burial Procedures"
+    ],
     "whyTitle": "Why Nadeeb?",
     "why1": "Work with multiple companies from one place",
     "why2": "Accept the requests that suit you, decline the ones that don't",
@@ -129,7 +138,18 @@
     "submitting": "Submitting...",
     "required": "This field is required",
     "invalidEmail": "Invalid email address",
-    "invalidPhone": "Invalid phone number (e.g., 05xxxxxxxx)"
+    "invalidPhone": "Invalid phone number (e.g., 05xxxxxxxx)",
+    "nationality": "Nationality",
+    "nationalitySA": "Saudi",
+    "nationalityEG": "Egyptian",
+    "nationalityPK": "Pakistani",
+    "nationalityIN": "Indian",
+    "nationalityBD": "Bangladeshi",
+    "nationalityID": "Indonesian",
+    "nationalityMY": "Malaysian",
+    "nationalityYE": "Yemeni",
+    "nationalitySY": "Syrian",
+    "nationalityOT": "Other"
   },
   "success": {
     "title": "Done! We've received your request",

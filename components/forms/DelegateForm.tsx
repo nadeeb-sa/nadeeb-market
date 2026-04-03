@@ -13,6 +13,7 @@ const schema = z.object({
   city: z.string().min(1),
   experience: z.string().min(1),
   languages: z.array(z.string()).default([]),
+  nationality: z.string().min(1),
   notes: z.string().optional(),
 });
 
@@ -24,7 +25,7 @@ export default function DelegateForm({ onSuccess }: { onSuccess: () => void }) {
   const [error, setError] = useState("");
   const { register, handleSubmit, formState: { errors, isSubmitting }, setValue, watch } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { languages: [] },
+    defaultValues: { languages: [], nationality: "" },
   });
 
   const languages = watch("languages");
@@ -73,6 +74,19 @@ export default function DelegateForm({ onSuccess }: { onSuccess: () => void }) {
     { value: "malay", label: t("langMs") },
   ];
 
+  const nationalityOptions = [
+    { value: "SA", label: t("nationalitySA") },
+    { value: "EG", label: t("nationalityEG") },
+    { value: "PK", label: t("nationalityPK") },
+    { value: "IN", label: t("nationalityIN") },
+    { value: "BD", label: t("nationalityBD") },
+    { value: "ID", label: t("nationalityID") },
+    { value: "MY", label: t("nationalityMY") },
+    { value: "YE", label: t("nationalityYE") },
+    { value: "SY", label: t("nationalitySY") },
+    { value: "OT", label: t("nationalityOT") },
+  ];
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       {error && (
@@ -119,6 +133,17 @@ export default function DelegateForm({ onSuccess }: { onSuccess: () => void }) {
           </select>
           {errors.experience && <p className={errorClass}>{t("required")}</p>}
         </div>
+      </div>
+
+      <div>
+        <label htmlFor="d-nationality" className={labelClass}>{t("nationality")}</label>
+        <select id="d-nationality" {...register("nationality")} className={`${inputClass} cursor-pointer`}>
+          <option value="">{t("required")}</option>
+          {nationalityOptions.map((n) => (
+            <option key={n.value} value={n.value}>{n.label}</option>
+          ))}
+        </select>
+        {errors.nationality && <p className={errorClass}>{t("required")}</p>}
       </div>
 
       <div>
