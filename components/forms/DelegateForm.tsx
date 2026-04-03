@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -19,16 +19,129 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
+const NATIONALITIES = [
+  "SA","AE","KW","QA","BH","OM",
+  "EG","JO","SY","LB","IQ","PS","YE","SD","LY","TN","DZ","MA","MR","SO",
+  "PK","IN","BD","NP","LK",
+  "ID","MY","PH",
+  "NG","ET","KE","TZ","SN","ML",
+  "GB","US","FR","TR","IR","AF",
+  "OT",
+];
+
+// Nationality Picker with search
+function NationalityPicker({
+  value,
+  onChange,
+  error,
+  t,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  error?: boolean;
+  t: (key: string) => string;
+}) {
+  const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const ref = useRef<HTMLDivElement>(null);
+
+  const filtered = NATIONALITIES.filter((code) =>
+    t(`nationality${code}`).toLowerCase().includes(search.toLowerCase()) ||
+    code.toLowerCase().includes(search.toLowerCase())
+  );
+
+  // Close on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const selectedLabel = value ? t(`nationality${value}`) : "";
+
+  return (
+    <div ref={ref} className="relative">
+      {/* Trigger button */}
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className={`w-full border rounded-lg px-4 py-3 min-h-[52px] text-base text-right flex items-center justify-between gap-2 outline-none transition-colors bg-gray-50/50
+          ${error ? "border-red-400 focus:ring-red-300" : "border-gray-200 hover:border-gray-300 focus:ring-2 focus:ring-primary/30 focus:border-primary"}
+          ${!value ? "text-gray-400" : "text-gray-900"}
+        `}
+      >
+        <span className="truncate">{selectedLabel || t("nationality")}</span>
+        <svg
+          className={`w-4 h-4 text-gray-400 transition-transform flex-shrink-0 ${open ? "rotate-180" : ""}`}
+          fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {/* Dropdown */}
+      {open && (
+        <div className="absolute top-full right-0 left-0 z-50 mt-1 bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden">
+          {/* Search input */}
+          <div className="p-2 border-b border-gray-100 sticky top-0 bg-white">
+            <div className="relative">
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
+              <input
+                type="text"
+                autoFocus
+                placeholder={t("nationalitySearch")}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full border border-gray-200 rounded-lg pr-9 pl-3 py-2 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
+              />
+            </div>
+          </div>
+
+          {/* Options list */}
+          <div className="max-h-56 overflow-y-auto">
+            {filtered.length === 0 ? (
+              <div className="px-4 py-6 text-center text-gray-400 text-sm">لا توجد نتائج</div>
+            ) : (
+              filtered.map((code) => (
+                <button
+                  key={code}
+                  type="button"
+                  onClick={() => { onChange(code); setOpen(false); setSearch(""); }}
+                  className={`w-full text-right px-4 py-2.5 text-sm hover:bg-gray-50 flex items-center gap-2 transition-colors
+                    ${value === code ? "bg-primary/5 text-primary font-semibold" : "text-gray-800"}
+                  `}
+                >
+                  <span className="flex-1">{t(`nationality${code}`)}</span>
+                  {value === code && <span className="text-primary text-xs">✓</span>}
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function DelegateForm({ onSuccess }: { onSuccess: () => void }) {
   const t = useTranslations("form");
   const te = useTranslations("error");
   const [error, setError] = useState("");
-  const { register, handleSubmit, formState: { errors, isSubmitting }, setValue, watch } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setValue,
+    watch,
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { languages: [], nationality: "" },
   });
 
   const languages = watch("languages");
+  const nationality = watch("nationality");
 
   const toggleLang = (lang: string) => {
     const current = languages || [];
@@ -49,42 +162,30 @@ export default function DelegateForm({ onSuccess }: { onSuccess: () => void }) {
     }
   };
 
-  const inputClass = "w-full border border-gray-200 rounded-lg px-4 py-3 min-h-[52px] text-base text-gray-900 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-colors bg-gray-50/50 hover:border-gray-300";
+  const inputClass =
+    "w-full border border-gray-200 rounded-lg px-4 py-3 min-h-[52px] text-base text-gray-900 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-colors bg-gray-50/50 hover:border-gray-300";
   const labelClass = "block text-sm font-semibold text-gray-700 mb-2";
   const errorClass = "text-red-500 text-xs mt-1.5 flex items-center gap-1";
 
   const cities = [
-    { value: "makkah", label: t("cityMakkah") },
+    { value: "makkah",  label: t("cityMakkah") },
     { value: "madinah", label: t("cityMadinah") },
-    { value: "jeddah", label: t("cityJeddah") },
-    { value: "other", label: t("cityOther") },
+    { value: "jeddah",  label: t("cityJeddah") },
+    { value: "other",   label: t("cityOther") },
   ];
 
   const expOptions = [
     { value: "0-1", label: t("exp1") },
     { value: "1-3", label: t("exp2") },
     { value: "3-5", label: t("exp3") },
-    { value: "5+", label: t("exp4") },
+    { value: "5+",  label: t("exp4") },
   ];
 
   const langOptions = [
-    { value: "arabic", label: t("langAr") },
+    { value: "arabic",  label: t("langAr") },
     { value: "english", label: t("langEn") },
-    { value: "urdu", label: t("langUr") },
-    { value: "malay", label: t("langMs") },
-  ];
-
-  const nationalityOptions = [
-    { value: "SA", label: t("nationalitySA") },
-    { value: "EG", label: t("nationalityEG") },
-    { value: "PK", label: t("nationalityPK") },
-    { value: "IN", label: t("nationalityIN") },
-    { value: "BD", label: t("nationalityBD") },
-    { value: "ID", label: t("nationalityID") },
-    { value: "MY", label: t("nationalityMY") },
-    { value: "YE", label: t("nationalityYE") },
-    { value: "SY", label: t("nationalitySY") },
-    { value: "OT", label: t("nationalityOT") },
+    { value: "urdu",    label: t("langUr") },
+    { value: "malay",   label: t("langMs") },
   ];
 
   return (
@@ -135,14 +236,15 @@ export default function DelegateForm({ onSuccess }: { onSuccess: () => void }) {
         </div>
       </div>
 
+      {/* Nationality — searchable picker */}
       <div>
-        <label htmlFor="d-nationality" className={labelClass}>{t("nationality")}</label>
-        <select id="d-nationality" {...register("nationality")} className={`${inputClass} cursor-pointer`}>
-          <option value="">{t("required")}</option>
-          {nationalityOptions.map((n) => (
-            <option key={n.value} value={n.value}>{n.label}</option>
-          ))}
-        </select>
+        <label className={labelClass}>{t("nationality")}</label>
+        <NationalityPicker
+          value={nationality}
+          onChange={(v) => setValue("nationality", v, { shouldValidate: true })}
+          error={!!errors.nationality}
+          t={t}
+        />
         {errors.nationality && <p className={errorClass}>{t("required")}</p>}
       </div>
 
