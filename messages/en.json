@@ -181,7 +181,9 @@
     "nationalityFR": "French",
     "nationalityTR": "Turkish",
     "nationalityIR": "Iranian",
-    "nationalityAF": "Afghan"
+    "nationalityAF": "Afghan",
+    "nationalityOtherLabel": "Enter your nationality",
+    "nationalityOtherPlaceholder": "e.g. Chadian, Kazakh..."
   },
   "success": {
     "title": "Done! We've received your request",

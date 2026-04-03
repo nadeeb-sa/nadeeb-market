@@ -181,7 +181,9 @@
     "nationalityFR": "فرنسي",
     "nationalityTR": "تركي",
     "nationalityIR": "إيراني",
-    "nationalityAF": "أفغاني"
+    "nationalityAF": "أفغاني",
+    "nationalityOtherLabel": "اكتب جنسيتك",
+    "nationalityOtherPlaceholder": "مثال: تشادي، ماليزي..."
   },
   "success": {
     "title": "تم! استلمنا طلبك بنجاح",

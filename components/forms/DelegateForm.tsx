@@ -14,10 +14,18 @@ const schema = z.object({
   experience: z.string().min(1),
   languages: z.array(z.string()).default([]),
   nationality: z.string().min(1),
+  nationalityOther: z.string().optional(),
   notes: z.string().optional(),
-});
+}).refine(
+  (d) => d.nationality !== "OT" || (!!d.nationalityOther && d.nationalityOther.trim().length > 0),
+  { message: "required", path: ["nationalityOther"] }
+);
 
-type FormData = z.infer<typeof schema>;
+type FormData = {
+  fullName: string; phone: string; email: string; city: string;
+  experience: string; languages: string[]; nationality: string;
+  nationalityOther?: string; notes?: string;
+};
 
 const NATIONALITIES = [
   "SA","AE","KW","QA","BH","OM",
@@ -155,7 +163,14 @@ export default function DelegateForm({ onSuccess }: { onSuccess: () => void }) {
   const onSubmit = async (data: FormData) => {
     setError("");
     try {
-      await submitDelegateLead(data);
+      // If "other" selected, send the typed value as nationality
+      const payload = {
+        ...data,
+        nationality: data.nationality === "OT" && data.nationalityOther
+          ? data.nationalityOther.trim()
+          : data.nationality,
+      };
+      await submitDelegateLead(payload);
       onSuccess();
     } catch {
       setError(te("submitFailed"));
@@ -247,6 +262,23 @@ export default function DelegateForm({ onSuccess }: { onSuccess: () => void }) {
         />
         {errors.nationality && <p className={errorClass}>{t("required")}</p>}
       </div>
+
+      {nationality === "OT" && (
+        <div>
+          <label htmlFor="d-natOther" className={labelClass}>
+            {t("nationalityOtherLabel")}
+            <span className="text-red-500 mr-1">*</span>
+          </label>
+          <input
+            id="d-natOther"
+            {...register("nationalityOther")}
+            placeholder={t("nationalityOtherPlaceholder")}
+            className={`${inputClass} ${errors.nationalityOther ? "border-red-400 focus:ring-red-300" : ""}`}
+            autoFocus
+          />
+          {errors.nationalityOther && <p className={errorClass}>{t("required")}</p>}
+        </div>
+      )}
 
       <div>
         <label className={labelClass}>{t("languages")}</label>
